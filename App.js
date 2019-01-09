@@ -1,9 +1,13 @@
 import React from 'react';
 import {Navigation} from 'react-native-navigation';
+import {Provider} from 'react-redux';
 import SignInScreen from './screens/SignIn';
 import SignUpScreen from './screens/SignUp';
+import configureStore from './store/configureStore';
 
-Navigation.registerComponent('ipfs.SignInScreen', () => SignInScreen);
+const store = configureStore();
+
+Navigation.registerComponentWithRedux('ipfs.SignInScreen', () => SignInScreen, Provider, store);
 Navigation.registerComponent('ipfs.SignUpScreen', () => SignUpScreen);
 
 Navigation.events().registerAppLaunchedListener(() => {

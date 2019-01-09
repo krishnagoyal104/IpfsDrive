@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {Navigation} from 'react-native-navigation';
+import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 class SignInScreen extends React.Component{
@@ -31,4 +32,10 @@ class SignInScreen extends React.Component{
 
 }
 
-export default SignInScreen;
+const mapStateToProps = (state) => {
+	return{
+		auth: state.auth 
+	};
+};
+
+export default connect(mapStateToProps)(SignInScreen);
