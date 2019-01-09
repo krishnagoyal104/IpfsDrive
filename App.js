@@ -1,22 +1,26 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Navigation} from 'react-native-navigation';
+import SignInScreen from './screens/SignIn';
+import SignUpScreen from './screens/SignUp';
 
-class App extends React.Component{
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Welcome to React-Native</Text>
-      </View>
-    );
-  }
-}
+Navigation.registerComponent('ipfs.SignInScreen', () => SignInScreen);
+Navigation.registerComponent('ipfs.SignUpScreen', () => SignUpScreen);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+Navigation.events().registerAppLaunchedListener(() => {
+
+  Navigation.setRoot({
+    root: {
+      stack: {
+        id: 'AuthStack',
+        children: [
+          {
+            component: {
+              name: 'ipfs.SignInScreen',            
+            }
+          }
+        ],
+      }
+    }
+  });
+
 });
-
-export default App;
