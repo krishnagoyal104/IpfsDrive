@@ -8,7 +8,7 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 Navigation.registerComponentWithRedux('ipfs.SignInScreen', () => SignInScreen, Provider, store);
-Navigation.registerComponent('ipfs.SignUpScreen', () => SignUpScreen);
+Navigation.registerComponentWithRedux('ipfs.SignUpScreen', () => SignUpScreen, Provider, store);
 
 Navigation.events().registerAppLaunchedListener(() => {
 

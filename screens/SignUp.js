@@ -1,22 +1,27 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, { Component } from 'react';
+import {View, StyleSheet} from 'react-native';
+import {connect} from 'react-redux';
+import {Navigation} from 'react-native-navigation';
+import { Container, Header, Content, Text, Form, Item, Input, Label, Button } from 'native-base';   
+import SignUpPage from '../components/SignUp';
+import {tryAuth, authGetToken} from '../actions/auth';
 
-class SignUpScreen extends React.Component{
+class SignUpScreen extends Component {
 
-	constructor(props){
-		super(props);
-	}
+  constructor(props){
+    super(props);
+  }
 
-	render(){
+  render() {
 
-		return(
-			<View>
-				<Text>Welcome to SignUpScreen</Text>
-			</View>
-		);
-
-	}
-
+    return (
+      <SignUpPage onSubmit={(object) => 
+        this.props.dispatch(tryAuth(object), 'signup')
+      } 
+      />  
+    );
+  }
 }
 
-export default SignUpScreen;
+export default connect()(SignUpScreen);
+

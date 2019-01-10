@@ -1,18 +1,15 @@
-import React from 'react';
-import {View, Text, Button} from 'react-native';
-import {Navigation} from 'react-native-navigation';
+import React, { Component } from 'react';
+import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {Navigation} from 'react-native-navigation';
+import { Container, Header, Content, Text, Form, Item, Input, Label, Button } from 'native-base';   
+import SignInPage from '../components/SignIn';
 import {tryAuth, authGetToken} from '../actions/auth';
 
-class SignInScreen extends React.Component{
+class SignInScreen extends Component {
 
 	constructor(props){
 		super(props);
-	}
-
-	componentWillMount(){
-		this.props.dispatch(authGetToken());
 	}
 
 	goToSignInScreen = () => {
@@ -21,28 +18,19 @@ class SignInScreen extends React.Component{
 				name: 'ipfs.SignUpScreen'
 			}
 		});
-	}  
-
-	render(){
-
-		return(
-			<View>
-				<Text>Welcome Here</Text>
-				<Button title='Press' onPress={
-					() => this.props.dispatch(tryAuth({email: 'kjxnvxckj@gmail.com', password:'123456'}, 'signup'))
-				} />
-				<Icon name="md-more" size={30} color="#333" />
-			</View>
-		);
-
 	}
 
+  render() {
+
+    return (
+      <SignInPage onSubmit={(object) => 
+      	this.props.dispatch(tryAuth(object))
+      } 
+      navigate={() => this.goToSignInScreen()}
+      />	
+    );
+  }
 }
 
-const mapStateToProps = (state) => {
-	return{
-		auth: state.auth 
-	};
-};
+export default connect()(SignInScreen);
 
-export default connect(mapStateToProps)(SignInScreen);
