@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import {Navigation} from 'react-native-navigation';
@@ -6,7 +6,7 @@ import { Container, Header, Content, Text, Form, Item, Input, Label, Button } fr
 import SignUpPage from '../components/SignUp';
 import {tryAuth, authGetToken} from '../actions/auth';
 
-class SignUpScreen extends Component {
+class SignUpScreen extends React.Component {
 
   constructor(props){
     super(props);
@@ -16,7 +16,7 @@ class SignUpScreen extends Component {
 
     return (
       <SignUpPage onSubmit={(object) => 
-        this.props.dispatch(tryAuth(object), 'signup')
+        this.props.dispatch(tryAuth(object, "signup"))
       } 
       />  
     );

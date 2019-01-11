@@ -3,6 +3,8 @@ import { AsyncStorage } from "react-native";
 import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "./actionTypes";
 import { uiStartLoading, uiStopLoading } from "./index";
 
+import { goToAuth, goHome } from '../App';
+
 const API_KEY = "AIzaSyD9WLjsC0ll5TQiCmOAGFR4wONsX8tnWfE";
 
 export const tryAuth = (authData, authMode) => {
@@ -46,7 +48,7 @@ export const tryAuth = (authData, authMode) => {
               parsedRes.refreshToken
             )
           );
-          //navigation route
+          goHome();
         }
       });
   };
@@ -149,9 +151,12 @@ export const authAutoSignIn = () => {
   return dispatch => {
     dispatch(authGetToken())
       .then(token => {
-        //navigation route
+        goHome();
       })
-      .catch(err => console.log("Failed to fetch token!"));
+      .catch(err => {
+        console.log("Failed to fetch token!")
+        goToAuth();
+      });
   };
 };
 
@@ -163,10 +168,10 @@ export const authClearStorage = () => {
   };
 };
 
-export const authLogout = () => {
+export const authSignOut = () => {
   return dispatch => {
     dispatch(authClearStorage()).then(() => {
-      App();
+      goToAuth();
     });
     dispatch(authRemoveToken());
   };
