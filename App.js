@@ -77,7 +77,7 @@ export const goHome = () => Navigation.setRoot({
   options: {
      sideMenu: {
       left: {
-       width: 200,      
+       width: 250,      
        },
      },
     }

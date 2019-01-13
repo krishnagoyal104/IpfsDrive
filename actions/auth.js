@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN } from "./actionTypes";
+import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY } from "./actionTypes";
 import { uiStartLoading, uiStopLoading } from "./index";
 
 import { goToAuth, goHome } from '../App';
@@ -45,7 +45,8 @@ export const tryAuth = (authData, authMode) => {
             authStoreToken(
               parsedRes.idToken,
               parsedRes.expiresIn,
-              parsedRes.refreshToken
+              parsedRes.refreshToken,
+              parsedRes.localId
             )
           );
           goHome();
@@ -54,24 +55,33 @@ export const tryAuth = (authData, authMode) => {
   };
 };
 
-export const authStoreToken = (token, expiresIn, refreshToken) => {
+export const authStoreToken = (token, expiresIn, refreshToken, uid) => {
   return dispatch => {
     const now = new Date();
     const expiryDate = now.getTime() + expiresIn * 1000;
-    dispatch(authSetToken(token, expiryDate));
+    dispatch(authSetToken(token, expiryDate, uid));
     AsyncStorage.setItem("ap:auth:token", token);
     AsyncStorage.setItem("ap:auth:expiryDate", expiryDate.toString());
     AsyncStorage.setItem("ap:auth:refreshToken", refreshToken);
+    AsyncStorage.setItem("ap:auth:uid", uid);
   };
 };
 
-export const authSetToken = (token, expiryDate) => {
+export const authSetToken = (token, expiryDate, uid) => {
   return {
     type: AUTH_SET_TOKEN,
     token: token,
-    expiryDate: expiryDate
+    expiryDate: expiryDate,
+    uid: uid
   };
 };
+
+export const authSetTokenOnly = (token) => {
+  return {
+    type: AUTH_SET_TOKEN_ONLY,
+    token: token
+  }
+}
 
 export const authGetToken = () => {
   return (dispatch, getState) => {
@@ -94,7 +104,7 @@ export const authGetToken = () => {
             const parsedExpiryDate = new Date(parseInt(expiryDate));
             const now = new Date();
             if (parsedExpiryDate > now) {
-              dispatch(authSetToken(fetchedToken));
+              dispatch(authSetTokenOnly(fetchedToken));
               resolve(fetchedToken);
             } else {
               reject();
@@ -128,7 +138,8 @@ export const authGetToken = () => {
                 authStoreToken(
                   parsedRes.id_token,
                   parsedRes.expires_in,
-                  parsedRes.refresh_token
+                  parsedRes.refresh_token,
+                  parsedRes.localId
                 )
               );
               return parsedRes.id_token;
@@ -164,7 +175,8 @@ export const authClearStorage = () => {
   return dispatch => {
     AsyncStorage.removeItem("ap:auth:token");
     AsyncStorage.removeItem("ap:auth:expiryDate");
-    return AsyncStorage.removeItem("ap:auth:refreshToken");
+    AsyncStorage.removeItem("ap:auth:refreshToken");
+    return AsyncStorage.removeItem("ap:auth:uid");
   };
 };
 
@@ -182,3 +194,15 @@ export const authRemoveToken = () => {
     type: AUTH_REMOVE_TOKEN
   };
 };   
+
+export const getUserId = () => {
+  return dispatch => {
+    AsyncStorage.getItem("ap:auth:uid")
+    .then((uid) => {      
+      dispatch(authSetToken(null, null, uid));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
+};

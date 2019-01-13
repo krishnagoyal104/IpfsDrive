@@ -6,7 +6,7 @@ import {
   AsyncStorage
 } from 'react-native';
 import {connect} from 'react-redux';
-import  {authAutoSignIn} from '../actions/auth';
+import  {authAutoSignIn, getUserId} from '../actions/index';
 
 class InitializeScreen extends React.Component {
 
@@ -15,6 +15,7 @@ class InitializeScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.dispatch(getUserId());
     this.props.dispatch(authAutoSignIn());
   }
 
