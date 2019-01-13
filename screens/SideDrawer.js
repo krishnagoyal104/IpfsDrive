@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {View, Text} from 'react-native';
 import SideDrawer from '../components/SideDrawer';
 import {authSignOut} from '../actions/auth';
+import {goHome} from '../App';
 
 class SideDrawerScreen extends React.Component{
 
@@ -14,7 +15,8 @@ class SideDrawerScreen extends React.Component{
 
 		return(
 
-			<SideDrawer signOut={() => this.props.dispatch(authSignOut())} />
+			<SideDrawer signOut={() => this.props.dispatch(authSignOut())} 
+			 goHome={() => goHome()} />
 					
 		);	
 	}

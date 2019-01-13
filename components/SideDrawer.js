@@ -1,43 +1,53 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import {goHome} from '../App';
+import React, { Component } from 'react';
+import {TouchableOpacity} from 'react-native';
+import { Container, Header, Content, List, ListItem, Text, Icon, Button, Left, Body, Right, Switch } from 'native-base';
 
-const SideDrawer = (props) => {
-	
+const SideDrawer = (props) => {  
 
-	return(
+    return (
+      <Container>
+        <Header />
+        <Content>
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "#FF9501" }}>
+                <Icon active name="home" />
+              </Button>  
+            </Left>
+            <Body>
+            <TouchableOpacity onPress={props.goHome} >
+              <Text>Home</Text>
+            </TouchableOpacity>  
+            </Body>   
+          </ListItem>
 
-		<View style={styles.container}>
-			<TouchableOpacity onPress={goHome}>
-				<Text style={styles.font}>Home</Text>
-			</TouchableOpacity>
-			<TouchableOpacity>
-				<Text style={styles.font}>Settings</Text>
-			</TouchableOpacity>
-			<TouchableOpacity onPress={props.signOut}>
-				<Text style={styles.font}>Log Out</Text>
-			</TouchableOpacity>
-		</View>
-		
-	);
-		
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "#007AFF" }}>
+                <Icon active name="ios-settings" />
+              </Button>
+            </Left>
+            <Body>
+            <TouchableOpacity>
+              <Text>Settings</Text>
+            </TouchableOpacity>  
+            </Body>            
+          </ListItem>
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "green" }}>
+                <Icon active name="contact" />
+              </Button>
+            </Left>
+            <Body>
+            <TouchableOpacity onPress={props.signOut} >
+              <Text>Logout</Text>
+            </TouchableOpacity> 
+            </Body>
+          </ListItem>
+        </Content>
+      </Container>
+    );
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: 'rgba(255,74,86,1)',
-		justifyContent: 'center',
-		alignItems: 'center'
-	},
-	font: {
-		padding: 25,
-		fontSize: 25
-	} 
-});
-
-
-
-
-
-export default SideDrawer;
+export default SideDrawer;  
