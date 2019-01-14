@@ -1,4 +1,4 @@
-import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY } from "../actions/actionTypes";
+import { AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY, AUTH_SET_UID_ONLY } from "../actions/actionTypes";
 
 const initialState = {
   token: null,
@@ -26,7 +26,12 @@ export default(state = initialState, action) => {
       return {
         ...state,
         token: action.token
-      }  
+      } 
+    case AUTH_SET_UID_ONLY:
+      return {
+        ...state,
+        uid: action.uid
+      }   
     default:
       return state;
   }

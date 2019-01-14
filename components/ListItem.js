@@ -8,11 +8,11 @@ const ListItemComponent = (props) => {
           <List>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: props.uri }} />
+                <Thumbnail square source={{ uri: 'https://gateway.ipfs.io/ipfs/QmUQC3SEusHXMMxj21ayfdTKVp3zCxcBPxg78fcdhAhLN6' }} />
               </Left>
               <Body>
-                <Text>{props.name}</Text>
-                <Text note numberOfLines={1}>{props.time}</Text>
+                <Text numberOfLines={1}>{props.name}</Text>
+                <Text note numberOfLines={1}>{props.size}</Text>
               </Body>
               <Right>
                 <Button transparent>

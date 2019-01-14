@@ -56,7 +56,7 @@ class ListScreen extends React.Component{
 		return (
 
 			<View>
-			<List images={['test1', 'test2', 'test3']} uri={'test'} name={'test'} time={'test'} />
+			<List images={this.props.images.images} />
 			<TouchableOpacity style={styles.icon} onPress={() => this.pickImage() } >							
 				<Icon name="md-add-circle" size={55} color="blue" />				
 			</TouchableOpacity>				
@@ -75,4 +75,10 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default connect()(ListScreen);
+const mapStateToProps = (state) => {
+	return{
+		images: state.images 
+	};
+};
+
+export default connect(mapStateToProps)(ListScreen);

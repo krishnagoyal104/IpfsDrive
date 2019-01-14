@@ -51,25 +51,21 @@ export const goHome = () => Navigation.setRoot({
   },
   center: {
     stack: {
-      options: {},
+      options: {
+            topBar: {
+              background: {
+                  color: '#3F51B5'
+                },
+              title: {     
+                text: 'Home', 
+                alignment: 'center',
+                color: 'white'            
+              }
+            }
+          },
       children: [{
         component: {
           name: 'ipfs.ListScreen',
-          options: {
-            topBar: {
-              leftButtons: [   
-                {
-                  color: 'blue',
-                  fontSize: 25
-                }
-              ],
-              height: 70,
-              title: {     
-                text: 'Home', 
-                alignment: 'center',         
-              }
-            }
-          }
         }
       }]
     }

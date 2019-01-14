@@ -1,6 +1,6 @@
 import { AsyncStorage } from "react-native";
 
-import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY } from "./actionTypes";
+import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY, AUTH_SET_UID_ONLY } from "./actionTypes";
 import { uiStartLoading, uiStopLoading } from "./index";
 
 import { goToAuth, goHome } from '../App';
@@ -80,6 +80,13 @@ export const authSetTokenOnly = (token) => {
   return {
     type: AUTH_SET_TOKEN_ONLY,
     token: token
+  }
+}
+
+export const authSetUidOnly = (uid) => {
+  return {
+    type: AUTH_SET_UID_ONLY,
+    uid: uid
   }
 }
 
@@ -199,7 +206,7 @@ export const getUserId = () => {
   return dispatch => {
     AsyncStorage.getItem("ap:auth:uid")
     .then((uid) => {      
-      dispatch(authSetToken(null, null, uid));
+      dispatch(authSetUidOnly(uid));
     })
     .catch((err) => {
       console.log(err);
