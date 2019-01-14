@@ -18,10 +18,17 @@ class SignUpScreen extends React.Component {
       <SignUpPage onSubmit={(object) => 
         this.props.dispatch(tryAuth(object, "signup"))
       } 
+      ui={this.props.ui.isLoading}
       />  
     );
   }
 }
 
-export default connect()(SignUpScreen);
+const mapStateToProps = (state) => {
+  return{
+    ui: state.ui 
+  };
+};
+
+export default connect(mapStateToProps)(SignUpScreen);
 

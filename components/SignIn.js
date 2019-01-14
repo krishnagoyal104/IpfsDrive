@@ -1,4 +1,5 @@
 import React from 'react';
+import {ActivityIndicator} from 'react-native';
 import {View, StyleSheet} from 'react-native';
 import {Container, Header, Content, Text, Form, Item, Input, Label, Button} from 'native-base';
 
@@ -52,14 +53,18 @@ class SignInPage extends React.Component{
 		              <Input onChangeText={val => this.onPasswordChange(val)} />
 		            </Item>
 		          </Form>
-		          <Button block primary onPress={this.signIn} >
+		          {  
+		          this.props.ui ?  
+		          <ActivityIndicator size="small" color="blue" /> :  	
+		          (<Button block primary onPress={this.signIn} >
 		            	<Text>Sign In</Text>
-		          </Button>	
+		          </Button>)
+		          }	
 		        </Content>
 		        <View style={styles.signIn}>
 			        <Button transparent primary onPress={this.props.navigate} >
-			            	<Text>Sign Up?</Text>
-			         </Button> 
+			           	<Text>Sign Up?</Text>
+			         </Button>
 		         </View>
 		      </Container>
 

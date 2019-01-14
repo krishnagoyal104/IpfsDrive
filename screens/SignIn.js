@@ -71,10 +71,17 @@ class SignInScreen extends React.Component {
 	      	this.props.dispatch(tryAuth(object))
 	      } 
 	      navigate={() => this.goToSignUpScreen()}
+	      ui={this.props.ui.isLoading}
 	      />   	
     );
   }
 }
 
-export default connect()(SignInScreen);
+const mapStateToProps = (state) => {
+	return{
+		ui: state.ui 
+	};
+};
+
+export default connect(mapStateToProps)(SignInScreen);
 

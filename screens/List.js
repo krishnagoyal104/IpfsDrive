@@ -70,8 +70,8 @@ class ListScreen extends React.Component{
 const styles = StyleSheet.create({ 
 	icon: {
 		position: 'absolute',
-		bottom: 25,
-		right: 11,		
+		marginTop: "100%",
+		marginLeft: "85%",		
 	}
 });
 

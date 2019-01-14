@@ -1,3 +1,5 @@
+import {UI_START_LOADING, UI_STOP_LOADING} from '../actions/actionTypes';
+
 const initialState = {
   isLoading: false
 };
