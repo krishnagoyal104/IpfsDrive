@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
+import {Navigation} from 'react-native-navigation';
 import List from  '../components/List';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {startAddImage, startLoadImages} from '../actions/images';
@@ -22,6 +23,17 @@ class ListScreen extends React.Component{
 
 	componentWillMount(){
 		this.props.dispatch(startLoadImages());
+	}
+
+	goToImageScreen = (uri) => {
+		Navigation.push(this.props.componentId, {
+			component: {
+				name: 'ipfs.ImageScreen',       
+				passProps:{
+				uri: uri
+				}
+			}, 				                                                 
+		});
 	}
 
 	pickImage = () => {
@@ -56,7 +68,7 @@ class ListScreen extends React.Component{
 		return (
 
 			<View>
-			<List images={this.props.images.images} />
+			<List images={this.props.images.images} navigate={this.goToImageScreen} />
 			<TouchableOpacity style={styles.icon} onPress={() => this.pickImage() } >							
 				<Icon name="md-add-circle" size={55} color="blue" />				
 			</TouchableOpacity>				

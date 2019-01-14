@@ -6,7 +6,9 @@ import SignUpScreen from './screens/SignUp';
 import ListScreen from './screens/List';
 import InitializeScreen from './screens/Initialize';
 import SideDrawerScreen from './screens/SideDrawer';
+import ImageScreen from './screens/Image';
 import configureStore from './store/configureStore';
+
 
 const store = configureStore();
 
@@ -15,6 +17,7 @@ Navigation.registerComponentWithRedux('ipfs.SignInScreen', () => SignInScreen, P
 Navigation.registerComponentWithRedux('ipfs.SignUpScreen', () => SignUpScreen, Provider, store);
 Navigation.registerComponentWithRedux('ipfs.ListScreen', () => ListScreen, Provider, store);
 Navigation.registerComponentWithRedux('ipfs.SideDrawerScreen', () => SideDrawerScreen, Provider, store);
+Navigation.registerComponent('ipfs.ImageScreen', () => ImageScreen);
 
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({

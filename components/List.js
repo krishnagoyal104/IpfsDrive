@@ -13,7 +13,7 @@ const List = (props) => {
 				renderItem={({item}) => {
 					return(
 						<View>
-							<ListItem uri={item.hash} name={item.name} size={item.size} />   
+							<ListItem uri={item.hash} name={item.name} size={item.size} navigate={props.navigate} />   
 						</View>
 					)
 				}}
