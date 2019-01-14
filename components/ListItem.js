@@ -8,7 +8,7 @@ const ListItemComponent = (props) => {
           <List>
             <ListItem thumbnail>
               <Left>
-                <Thumbnail square source={{ uri: 'https://gateway.ipfs.io/ipfs/QmUQC3SEusHXMMxj21ayfdTKVp3zCxcBPxg78fcdhAhLN6' }} />
+                <Thumbnail square source={{ uri: `https://gateway.ipfs.io/ipfs/${props.uri}` }} />
               </Left>
               <Body>
                 <Text numberOfLines={1}>{props.name}</Text>
