@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import { AsyncStorage } from "react-native";
 
 import { TRY_AUTH, AUTH_SET_TOKEN, AUTH_REMOVE_TOKEN, AUTH_SET_TOKEN_ONLY, AUTH_SET_UID_ONLY } from "./actionTypes";
@@ -18,13 +20,14 @@ export const tryAuth = (authData, authMode) => {
         "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=" +
         API_KEY;
     }
-    fetch(url, {
-      method: "POST",
-      body: JSON.stringify({
+    axios({
+      method: 'post',
+      url: url,
+      data: {
         email: authData.email,
         password: authData.password,
         returnSecureToken: true
-      }),
+      },
       headers: {
         "Content-Type": "application/json"
       }
@@ -34,19 +37,19 @@ export const tryAuth = (authData, authMode) => {
         alert("Authentication failed, please try again!");
         dispatch(uiStopLoading());
       })
-      .then(res => res.json())
       .then(parsedRes => {
         dispatch(uiStopLoading());
-        console.log(parsedRes);
-        if (!parsedRes.idToken) {
+        console.log('Hiiiiiiii' + parsedRes.data);
+        if (!parsedRes.data.idToken) {
           alert("Authentication failed, please try again!");
         } else {
+          console.log('Testing' + parsedRes);
           dispatch(
             authStoreToken(
-              parsedRes.idToken,
-              parsedRes.expiresIn,
-              parsedRes.refreshToken,
-              parsedRes.localId
+              parsedRes.data.idToken,
+              parsedRes.data.expiresIn,
+              parsedRes.data.refreshToken,
+              parsedRes.data.localId
             )
           );
           goHome();
@@ -126,10 +129,10 @@ export const authGetToken = () => {
       .catch(err => {
         return AsyncStorage.getItem("ap:auth:refreshToken")
           .then(refreshToken => {
-            return fetch(
-              "https://securetoken.googleapis.com/v1/token?key=" + API_KEY,
+            return axios(
               {
-                method: "POST",
+                method: 'post',
+                url: "https://securetoken.googleapis.com/v1/token?key=" + API_KEY,
                 headers: {
                   "Content-Type": "application/x-www-form-urlencoded"
                 },
@@ -137,7 +140,6 @@ export const authGetToken = () => {
               }
             );
           })
-          .then(res => res.json())
           .then(parsedRes => {
             if (parsedRes.id_token) {
               console.log("Refresh token worked!");
