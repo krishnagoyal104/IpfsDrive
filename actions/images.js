@@ -1,23 +1,29 @@
+import axios from 'axios';
+
 import { SET_IMAGES, REMOVE_IMAGE } from "./actionTypes";
-import { uiStartLoading, uiStopLoading, authGetToken, getUserId } from "./index";
+import { uiStartLoading, uiStopLoading, authGetToken, getUserId, uploadProgress } from "./index";
 
 export const startAddImage = (image) => {
   return (dispatch, getState) => {
     let authToken;
-    dispatch(uiStartLoading());
+    let object;
     dispatch(authGetToken())
       .catch(() => {
         alert("No valid token found!");
       })
       .then(token => {
         authToken = token;
-        return fetch(
-          "https://ipfs.infura.io:5001/api/v0/add",
+        return axios(
           {
-            method: "POST",
-            body: image,
+            url: "https://ipfs.infura.io:5001/api/v0/add",
+            method: "post",
+            data: image,
             headers: {
               'Content-Type': 'multipart/form-data',
+           },
+           onUploadProgress: function(progress){
+            console.log(progress.loaded/progress.total);
+            dispatch(uploadProgress(progress.loaded/progress.total));
            }
           }
         );
@@ -25,34 +31,34 @@ export const startAddImage = (image) => {
       .catch(err => {
         console.log(err);
         alert("Something went wrong, please try again!");
-        dispatch(uiStopLoading());
       })
-      .then(res => res.json())
-      .then(parsedRes => {
-        const object = {
+      .then(res => {
+        let parsedRes = res.data;
+        object = {
           name: parsedRes.Name,
           hash: parsedRes.Hash,
           size: parsedRes.Size
         };
         const uid = getState().auth.uid;
         console.log('Hi', uid);
-        return fetch(
-          "https://ipfs-a5310.firebaseio.com/users/" + uid + ".json?auth=" +
-            authToken,
+        return axios(
           {
-            method: "POST",
-            body: JSON.stringify(object)
+            url: "https://ipfs-a5310.firebaseio.com/users/" + uid + ".json?auth=" + authToken,
+            method: "post",
+            data: object
           }
         );
       })
-      .then(res => res.json())
       .then(parsedRes => {
-        dispatch(uiStopLoading());
+        const image = {
+          ...object,
+          key: parsedRes.data.name
+        }
+        dispatch(setImages(image));
       })
       .catch(err => {
         console.log(err);
         alert("Something went wrong, please try again!");
-        dispatch(uiStopLoading());
       });
   };
 };
@@ -62,7 +68,7 @@ export const startLoadImages = () => {
     dispatch(authGetToken())
       .then(token => {
         const uid = getState().auth.uid;
-        return fetch(
+        return axios(
           "https://ipfs-a5310.firebaseio.com/users/" + uid + ".json?auth=" +
             token
         );
@@ -70,8 +76,8 @@ export const startLoadImages = () => {
       .catch(() => {
         alert("No valid token found!");
       })
-      .then(res => res.json())
-      .then(parsedRes => {
+      .then(res => {
+        let parsedRes = res.data;
         console.log(parsedRes);
         const images = [];
         for (let key in parsedRes) {

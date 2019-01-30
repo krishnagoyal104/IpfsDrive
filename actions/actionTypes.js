@@ -10,3 +10,5 @@ export const AUTH_SET_UID_ONLY = "AUTH_SET_UID_ONLY"
 
 export const SET_IMAGES = "SET_IMAGES";
 export const REMOVE_IMAGE = "REMOVE_IMAGE";
+
+export const SET_UPLOAD_PROGRESS = 'SET_UPLOAD_PROGRESS';

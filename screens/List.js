@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet, Dimensions, ProgressBarAndroid} from 'react-native';
 import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-picker';
 import {Navigation} from 'react-native-navigation';
@@ -70,8 +70,17 @@ class ListScreen extends React.Component{
 			<View>
 			<List images={this.props.images.images} navigate={this.goToImageScreen} />
 			<TouchableOpacity style={styles.icon} onPress={() => this.pickImage() } >							
-				<Icon name="md-add-circle" size={55} color="blue" />				
-			</TouchableOpacity>				
+				<Icon name="md-add-circle" size={55} color="#3F51B5" />				
+			</TouchableOpacity>
+			{
+				this.props.progress.progress && this.props.progress.progress!==1 && 
+				<ProgressBarAndroid
+					style={styles.progressBar}
+		            styleAttr="Horizontal"
+		            indeterminate={false}
+		            progress={this.props.progress.progress}
+		    />
+	    }    
 			</View>
 		);
 
@@ -82,14 +91,21 @@ class ListScreen extends React.Component{
 const styles = StyleSheet.create({ 
 	icon: {
 		position: 'absolute',
-		marginTop: "100%",
-		marginLeft: "85%",		
+		marginTop: Dimensions.get('window').height * 70/100,
+		marginLeft: Dimensions.get('window').width * 80/100		
+	},
+	progressBar: {
+		width: '80%',
+		alignSelf: 'center',
+		position: 'absolute',
+		marginTop: Dimensions.get('window').height * 80/100,
 	}
 });
 
 const mapStateToProps = (state) => {
 	return{
-		images: state.images 
+		images: state.images,
+		progress: state.progress 
 	};
 };
 
