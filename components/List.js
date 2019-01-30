@@ -7,18 +7,15 @@ const List = (props) => {
 
 	return(  
 
-		<View>
 			<FlatList 
 				data={props.images}
 				renderItem={({item}) => {
 					return(
-						<View>
 							<ListItem uri={item.hash} name={item.name} size={item.size} navigate={props.navigate} />   
-						</View>
-					)
+					);
 				}}
 			/>
-		</View>	 
+			
 	);
 		
 }
