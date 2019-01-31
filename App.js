@@ -36,8 +36,17 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: 'ipfs.SignInScreen',            
-            }
+              name: 'ipfs.SignInScreen',  
+              options: {
+              topBar: {
+                title: {
+                  text: 'SIGN IN',
+                  alignment: 'center',
+                  color: '#007ee5'
+                }
+              } 
+            }          
+            },
           }
         ],
       }
@@ -57,7 +66,7 @@ export const goHome = () => Navigation.setRoot({
       options: {
             topBar: {
               background: {
-                  color: '#3F51B5'
+                  color: '#007ee5'
                 },
               title: {     
                 text: 'Home', 

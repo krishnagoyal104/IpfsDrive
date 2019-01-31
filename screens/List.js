@@ -70,7 +70,7 @@ class ListScreen extends React.Component{
 			<View>
 			<List images={this.props.images.images} navigate={this.goToImageScreen} />
 			<TouchableOpacity style={styles.icon} onPress={() => this.pickImage() } >							
-				<Icon name="md-add-circle" size={55} color="#3F51B5" />				
+				<Icon name="md-add-circle" size={55} color="#007ee5" />				
 			</TouchableOpacity>
 			{
 				this.props.progress.progress && this.props.progress.progress!==1 && 

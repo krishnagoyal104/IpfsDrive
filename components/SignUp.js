@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
-import {Container, Header, Content, Text, Form, Item, Input, Label, Button} from 'native-base';
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator} from 'react-native';
 
 class SignUpPage extends React.Component{
 
@@ -9,6 +8,9 @@ class SignUpPage extends React.Component{
 		super(props);
 
 		this.state = {
+			color1: '#C7C7DCD',
+			color2: '#C7C7CD',
+			color3: '#C7C7CD',
 			email: '',
 			password: ''
 		}
@@ -40,32 +42,44 @@ class SignUpPage extends React.Component{
 
 		return( 
 
-			<Container>        
-		        <Content>
-		          <Form style={styles.form}>
-		            <Item floatingLabel>
-		              <Label>Username</Label>
-		              <Input onChangeText={val => this.onEmailChange(val)} />
-		            </Item>
-		            <Item floatingLabel last>
-		              <Label>Password</Label>
-		              <Input onChangeText={val => this.onPasswordChange(val)} />
-		            </Item>
-		          </Form>
-		          {
-		          this.props.ui ? 
-		     	  <ActivityIndicator size="small" color="blue" /> : 	  
-		          (<Button block primary onPress={this.signIn} >
-		            	<Text>Sign Up</Text>
-		          </Button>)	
-		      	  }
-		        </Content>
-		        <View style={styles.signUp}>
-			        <Button transparent primary onPress={this.props.navigate} >
-			            	<Text>Sign Up?</Text>
-			         </Button> 
-		         </View>
-		      </Container>
+			<View style={styles.container} >
+					<TextInput style={styles.textInput} selectionColor={'#007ee5'}
+						autoFocus={true} 
+						underlineColorAndroid={this.state.color1}  
+						onFocus={() => this.setState(({color1: '#007ee5'}))}
+						onBlur={() => this.setState({color1: '#C7C7CD'})}
+						placeholder={'Email'}   
+						onChangeText={val => this.onEmailChange(val)} 
+					/>
+
+					<TextInput style={styles.textInput} selectionColor={'#007ee5'} 
+						underlineColorAndroid={this.state.color2}
+						onFocus={() => this.setState(({color2: '#007ee5'}))}
+						onBlur={() => this.setState({color2: '#C7C7CD'})}
+						placeholder={'Password'}  
+						onChangeText={val => this.onPasswordChange(val)}
+						secureTextEntry={true}
+					/>
+
+					<TextInput style={styles.textInput} selectionColor={'#007ee5'} 
+						underlineColorAndroid={this.state.color3}
+						onFocus={() => this.setState(({color3: '#007ee5'}))}
+						onBlur={() => this.setState({color3: '#C7C7CD'})}
+						placeholder={'Confirm Password'}  
+						secureTextEntry={true}
+					/>
+
+					{  
+	          this.props.ui ?  
+	          <ActivityIndicator size="small" color='#007ee5' /> :  	
+	          (		      
+							<TouchableOpacity style={styles.loginContainer} onPress={() => this.signIn()} >
+								<Text style={styles.login} >Sign Up</Text>
+							</TouchableOpacity> 
+						)
+		      }
+
+				</View>
 
 		);
 
@@ -74,11 +88,38 @@ class SignUpPage extends React.Component{
 }
 
 const styles = StyleSheet.create({
-	form: {
-		paddingBottom: 50
+	container: {
+		alignItems: 'center'
 	},
-	signUp: {
-		paddingLeft: 260
+	topBox: {
+		flex: 4,
+		alignItems: 'center',
+		justifyContent: 'space-evenly'
+	},
+	bottomBox: {
+		flex:3,
+	},
+	textInput: {
+		height: 50,
+		width: '95%',
+		fontSize: 18
+	},
+	loginContainer: {
+		height: 40,
+		width: '95%',
+		marginTop: 6,
+		backgroundColor: '#007ee5',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	login: {
+		color: 'white',
+		fontSize: 18
+	},
+	text: {
+		fontFamily: 'Helvetica Neue',
+		color: '#007ee5',
+		marginTop: 20
 	}
 });
 
