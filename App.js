@@ -36,8 +36,20 @@ Navigation.events().registerAppLaunchedListener(() => {
         children: [
           {
             component: {
-              name: 'ipfs.SignInScreen',            
-            }
+              name: 'ipfs.SignInScreen',  
+              options: {
+              topBar: {
+                background: {
+                  color: '#F57C00'
+                },
+                title: {
+                  text: 'IPFS APP',
+                  alignment: 'center',
+                  color: 'white'
+                }
+              } 
+            }          
+            },
           }
         ],
       }
