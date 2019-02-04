@@ -51,14 +51,8 @@ class SignInScreen extends React.Component {
 	      		const bodyFormData = new FormData();
 	      		bodyFormData.append('file', pic); 
 
-	      		/*this.setState((prevState) => ({
-	      			images: prevState.images.concat({uri:response.uri, key:Math.random()})
-	  	      		
-	      		}));*/
-
 	      		this.props.dispatch(startAddImage(bodyFormData));
       		
-
 	        }
 	          
 	      }); 

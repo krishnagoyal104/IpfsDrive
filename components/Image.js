@@ -1,31 +1,22 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 
 const ImageView = (props) => {
 	
 
 	return(
-
-		<View style={styles.container} >			
-			<Image source={{uri: `https://gateway.ipfs.io/ipfs/${props.hash}`}} style={styles.image} />
-		</View>	
+			
+			<Image source={{uri: `https://gateway.ipfs.io/ipfs/${props.hash}`}} style={styles.image} resizeMode={'contain'} />
 		
 	);
 		
 }
 
 const styles = StyleSheet.create({
-
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: 'black' 
-	},
 	
 	image: {
-		height: '60%',
-		width: '80%'
+		height: Dimensions.get('window').height,
+		width: '100%'
 	}
 
 });
