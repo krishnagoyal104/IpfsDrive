@@ -6,12 +6,13 @@
 IPFS or Interplanetary File System allows a decentralized way of storing and sharing files. 
 It's a peer-to-peer protocol where files are stored on a number of distributed systems that are run and maintained by the community.
 
-# Functionalities
+# Specs
 Files uploaded are sent directly to Ipfs (public nodes maintained and provided by Infura) and the resulting hash is stored in a database.
 We use firebase for storing and authenticating users.
 
 ## To run locally  
 ```
+$ npm install  
 $ npm run android  
 $ npm start    
 ```
